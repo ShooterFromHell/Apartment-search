@@ -1,4 +1,4 @@
-package com.vladimir.myapplication.ui.main;
+package com.vladimir.myapplication.Fragment;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -16,9 +16,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.vladimir.myapplication.FindApartmentById;
-import com.vladimir.myapplication.ID;
-import com.vladimir.myapplication.NetworkService;
+import com.vladimir.myapplication.Model.FindApartmentById;
+import com.vladimir.myapplication.Model.ID;
+import com.vladimir.myapplication.Model.NetworkService;
 import com.vladimir.myapplication.R;
 
 import java.util.ArrayList;
@@ -30,7 +30,7 @@ import retrofit2.Response;
 
 public class MainFragment extends Fragment implements View.OnClickListener {
 
-    private ArrayList<com.vladimir.myapplication.City> cities;
+    private ArrayList<com.vladimir.myapplication.Model.City> cities;
 
     String[] states = {"Винницкая", "Житомирская", "Тернопольская", "Хмельницкая", "Львовская",
             "Черниговская", "Харьковская", "Сумская", "Ровенская", "Киевская", "Днепропетровская",
@@ -123,10 +123,11 @@ public class MainFragment extends Fragment implements View.OnClickListener {
             NetworkService.getInstance()
                     .getJSONApi()
                     .getCity(itemId, API_KEY)
-                    .enqueue(new Callback<List<com.vladimir.myapplication.City>>() {
+                    .enqueue(new Callback<List<com.vladimir.myapplication.Model.City>>() {
                         @Override
-                        public void onResponse(@NonNull Call<List<com.vladimir.myapplication.City>> call, @NonNull Response<List<com.vladimir.myapplication.City>> response) {
+                        public void onResponse(@NonNull Call<List<com.vladimir.myapplication.Model.City>> call, @NonNull Response<List<com.vladimir.myapplication.Model.City>> response) {
                             cities.clear();
+                            assert response.body() != null;
                             cities.addAll(response.body());
                             String[] gorod = new String[cities.size()];
                             for (int i = 0; i < cities.size(); i++) {
@@ -152,7 +153,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
                         }
 
                         @Override
-                        public void onFailure(@NonNull Call<List<com.vladimir.myapplication.City>> call, @NonNull Throwable t) {
+                        public void onFailure(@NonNull Call<List<com.vladimir.myapplication.Model.City>> call, @NonNull Throwable t) {
                             Toast.makeText(getActivity(), "Error occurred while getting request!", Toast.LENGTH_SHORT).show();
                             t.printStackTrace();
                         }

@@ -1,4 +1,8 @@
-package com.vladimir.myapplication;
+package com.vladimir.myapplication.Model;
+
+import com.vladimir.myapplication.Model.City;
+import com.vladimir.myapplication.Model.FindApartmentById;
+import com.vladimir.myapplication.Model.ID;
 
 import java.util.List;
 

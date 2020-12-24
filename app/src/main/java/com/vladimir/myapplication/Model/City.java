@@ -1,4 +1,4 @@
-package com.vladimir.myapplication;
+package com.vladimir.myapplication.Model;
 
 import com.google.gson.annotations.SerializedName;
 

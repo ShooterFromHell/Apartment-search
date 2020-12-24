@@ -1,4 +1,4 @@
-package com.vladimir.myapplication;
+package com.vladimir.myapplication.Model;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
