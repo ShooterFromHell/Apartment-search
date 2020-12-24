@@ -16,7 +16,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.vladimir.myapplication.Model.FindApartmentById;
+import com.vladimir.myapplication.Model.Apartment;
 import com.vladimir.myapplication.Model.ID;
 import com.vladimir.myapplication.Controller.NetworkService;
 import com.vladimir.myapplication.R;
@@ -197,19 +197,19 @@ public class MainFragment extends Fragment implements View.OnClickListener {
                                     NetworkService.getInstance()
                                             .getJSONApi()
                                             .getApartmentById(id.getItems()[i], API_KEY)
-                                            .enqueue(new Callback<FindApartmentById>() {
+                                            .enqueue(new Callback<Apartment>() {
                                                 @Override
-                                                public void onResponse(@NonNull Call<FindApartmentById> call, @NonNull Response<FindApartmentById> response) {
-                                                    FindApartmentById findApartmentById = response.body();
-                                                    if (findApartmentById.getDescription() != "")
-                                                        result.append(findApartmentById.getDescription() + "\n");
+                                                public void onResponse(@NonNull Call<Apartment> call, @NonNull Response<Apartment> response) {
+                                                    Apartment apartment = response.body();
+                                                    if (apartment.getDescription() != "")
+                                                        result.append(apartment.getDescription() + "\n");
                                                     else
-                                                        result.append(findApartmentById.getDescription_uk() + "\n");
-                                                    result.append(url + findApartmentById.getBeautiful_url() + "\n");
+                                                        result.append(apartment.getDescription_uk() + "\n");
+                                                    result.append(url + apartment.getBeautiful_url() + "\n");
                                                 }
 
                                                 @Override
-                                                public void onFailure(@NonNull Call<FindApartmentById> call, @NonNull Throwable t) {
+                                                public void onFailure(@NonNull Call<Apartment> call, @NonNull Throwable t) {
                                                     Toast.makeText(getActivity(), "Error occurred while getting request!", Toast.LENGTH_SHORT).show();
                                                     t.printStackTrace();
                                                 }

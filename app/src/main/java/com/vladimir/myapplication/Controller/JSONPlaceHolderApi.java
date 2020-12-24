@@ -1,7 +1,7 @@
 package com.vladimir.myapplication.Controller;
 
 import com.vladimir.myapplication.Model.City;
-import com.vladimir.myapplication.Model.FindApartmentById;
+import com.vladimir.myapplication.Model.Apartment;
 import com.vladimir.myapplication.Model.ID;
 
 import java.util.List;
@@ -27,5 +27,5 @@ public interface JSONPlaceHolderApi {
     public Call<List<City>> getCity(@Path("stateID") int id, @Query("api_key") String api_key);
 
     @GET("/dom/info/{id}")
-    public Call<FindApartmentById> getApartmentById(@Path("id") int id, @Query("api_key") String api_key);
+    public Call<Apartment> getApartmentById(@Path("id") int id, @Query("api_key") String api_key);
 }
