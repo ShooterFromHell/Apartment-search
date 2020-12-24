@@ -1,4 +1,4 @@
-package com.vladimir.myapplication.Model;
+package com.vladimir.myapplication.Controller;
 
 import com.vladimir.myapplication.Model.City;
 import com.vladimir.myapplication.Model.FindApartmentById;

@@ -18,7 +18,7 @@ import androidx.fragment.app.Fragment;
 
 import com.vladimir.myapplication.Model.FindApartmentById;
 import com.vladimir.myapplication.Model.ID;
-import com.vladimir.myapplication.Model.NetworkService;
+import com.vladimir.myapplication.Controller.NetworkService;
 import com.vladimir.myapplication.R;
 
 import java.util.ArrayList;
@@ -42,9 +42,10 @@ public class MainFragment extends Fragment implements View.OnClickListener {
     Button btnStart;
     Spinner city;
     TextView result;
-    EditText price_from, price_to, area_from, area_to, kitchen_from, kitchen_to, floor_from, floor_to;
+    EditText priceFrom, priceTo, areaFrom, areaTo, kitchenFrom, kitchenTo, floorFrom, floorTo;
     static final String API_KEY = "puRz51BtXNSlzWcpNj51qJ6deUi8vjJfmg70byu1";
     Integer itemId, itemId2, itemId3;
+    String url = "https://dom.ria.com/uk/";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -55,14 +56,14 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         btnStart = view.findViewById(R.id.find);
         btnStart.setOnClickListener(this);
         city = view.findViewById(R.id.spin_city);
-        price_from = view.findViewById(R.id.et_price_from);
-        price_to = view.findViewById(R.id.et_price_to);
-        area_from = view.findViewById(R.id.et_area_from);
-        area_to = view.findViewById(R.id.et_area_to);
-        kitchen_from = view.findViewById(R.id.et_kitchen_from);
-        kitchen_to = view.findViewById(R.id.et_kitchen_to);
-        floor_from = view.findViewById(R.id.et_floor_from);
-        floor_to = view.findViewById(R.id.et_floor_to);
+        priceFrom = view.findViewById(R.id.et_price_from);
+        priceTo = view.findViewById(R.id.et_price_to);
+        areaFrom = view.findViewById(R.id.et_area_from);
+        areaTo = view.findViewById(R.id.et_area_to);
+        kitchenFrom = view.findViewById(R.id.et_kitchen_from);
+        kitchenTo = view.findViewById(R.id.et_kitchen_to);
+        floorFrom = view.findViewById(R.id.et_floor_from);
+        floorTo = view.findViewById(R.id.et_floor_to);
 
         cities = new ArrayList<>();
 
@@ -129,11 +130,11 @@ public class MainFragment extends Fragment implements View.OnClickListener {
                             cities.clear();
                             assert response.body() != null;
                             cities.addAll(response.body());
-                            String[] gorod = new String[cities.size()];
+                            String[] cityName = new String[cities.size()];
                             for (int i = 0; i < cities.size(); i++) {
-                                gorod[i] = cities.get(i).getName();
+                                cityName[i] = cities.get(i).getName();
                             }
-                            ArrayAdapter<String> area = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, gorod);
+                            ArrayAdapter<String> area = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, cityName);
                             // Определяем разметку для использования при выборе элемента
                             area.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                             // Применяем адаптер к элементу spinner
@@ -165,21 +166,21 @@ public class MainFragment extends Fragment implements View.OnClickListener {
     class Progress extends AsyncTask<Void, Integer, Void> {
         @Override
         protected Void doInBackground(Void... voids) {
-            String priceF = price_from.getText().toString();
+            String priceF = priceFrom.getText().toString();
             int price_f = Integer.parseInt(priceF);
-            String priceT = price_to.getText().toString();
+            String priceT = priceTo.getText().toString();
             int price_t = Integer.parseInt(priceT);
-            String areaF = area_from.getText().toString();
+            String areaF = areaFrom.getText().toString();
             int area_f = Integer.parseInt(areaF);
-            String kitchenF = kitchen_from.getText().toString();
+            String kitchenF = kitchenFrom.getText().toString();
             int kitchen_f = Integer.parseInt(kitchenF);
-            String floorF = floor_from.getText().toString();
+            String floorF = floorFrom.getText().toString();
             int floor_f = Integer.parseInt(floorF);
-            String areaT = area_to.getText().toString();
+            String areaT = areaTo.getText().toString();
             int area_t = Integer.parseInt(areaT);
-            String kitchenT = kitchen_to.getText().toString();
+            String kitchenT = kitchenTo.getText().toString();
             int kitchen_t = Integer.parseInt(kitchenT);
-            String floorT = floor_to.getText().toString();
+            String floorT = floorTo.getText().toString();
             int floor_t = Integer.parseInt(floorT);
             NetworkService.getInstance()
                     .getJSONApi()
@@ -190,7 +191,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
                             ID id = response.body();
                             result.setText("");
                             if (id.getItems().length == 0)
-                                result.setText("Ничего не найдено");
+                                result.setText(R.string.not_found);
                             else {
                                 for (int i = 0; i < id.getItems().length; i++) {
                                     NetworkService.getInstance()
@@ -204,7 +205,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
                                                         result.append(findApartmentById.getDescription() + "\n");
                                                     else
                                                         result.append(findApartmentById.getDescription_uk() + "\n");
-                                                    result.append("https://dom.ria.com/uk/" + findApartmentById.getBeautiful_url() + "\n");
+                                                    result.append(url + findApartmentById.getBeautiful_url() + "\n");
                                                 }
 
                                                 @Override
